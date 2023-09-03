@@ -3,6 +3,9 @@
 	import { setContext } from 'svelte';
 	import Day from './Day.svelte';
 	import { Poline } from 'poline';
+	import { dragscroll } from '@svelte-put/dragscroll';
+	import Times from './Times.svelte';
+	import Fade from './Fade.svelte';
 
 	export let data: PageData;
 	const event = data.event;
@@ -57,26 +60,48 @@
 	<span>{event.description}</span>
 	<span>{event.timeZone}</span>
 </div>
-<div class="schedule" style={colorStyle}>
-	{#each Array.from(dates.entries()) as [date, segments]}
-		<Day {date} {segments} />
-	{/each}
+<div class="schedule-parent">
+	<Times {numberOfSegments} />
+	<Fade />
+	<div use:dragscroll class="schedule" style={colorStyle}>
+		{#each Array.from(dates.entries()) as [date, segments]}
+			<Day {date} {segments} />
+		{/each}
+	</div>
+	<Fade direction="right" />
 </div>
 
 <style lang="scss">
 	:global(body) {
 		margin: 0;
+		font-family: 'Inter';
+		font-size: 16px;
+		font-weight: 400;
+		letter-spacing: -0.011em;
+		line-height: 22px;
 	}
 
 	.header {
-		padding: 16px;
+		padding: 24px;
+
+		h1 {
+			font-family: 'Archivo';
+			font-weight: 400;
+			font-size: 28px;
+			line-height: 36px;
+		}
+	}
+
+	.schedule-parent {
+		display: flex;
+		align-items: stretch;
+		justify-content: stretch;
 	}
 
 	.schedule {
 		display: flex;
 		overflow-x: auto;
 		box-sizing: border-box;
-		width: 100%;
-		padding: 0 16px;
+		padding: 0 24px;
 	}
 </style>

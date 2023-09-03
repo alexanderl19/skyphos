@@ -11,8 +11,9 @@
 
 <style lang="scss">
 	.half-hour {
+		box-sizing: border-box;
 		width: 96px;
 		height: 24px;
-		border-top: 0.5px solid #fff;
+		border: 0.1px solid #fff;
 	}
 </style>
