@@ -72,6 +72,8 @@
 </div>
 
 <style lang="scss">
+	$max-width: 1056px;
+
 	:global(body) {
 		margin: 0;
 		font-family: 'Inter';
@@ -82,7 +84,9 @@
 	}
 
 	.header {
+		margin: 0 auto;
 		padding: 24px;
+		max-width: $max-width;
 
 		h1 {
 			font-family: 'Archivo';
@@ -93,15 +97,18 @@
 	}
 
 	.schedule-parent {
+		$padding: 24px;
+
+		padding-left: calc((100vw - $max-width) / 2 - 50px - $padding);
 		display: flex;
 		align-items: stretch;
 		justify-content: stretch;
-	}
 
-	.schedule {
-		display: flex;
-		overflow-x: auto;
-		box-sizing: border-box;
-		padding: 0 24px;
+		.schedule {
+			display: flex;
+			overflow-x: auto;
+			box-sizing: border-box;
+			padding: 0 calc((100vw - $max-width) / 2) 0 $padding;
+		}
 	}
 </style>
