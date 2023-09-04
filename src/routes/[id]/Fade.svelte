@@ -1,5 +1,5 @@
 <script lang="ts">
-	export let width = 24;
+	export let width = 32;
 	export let direction: 'left' | 'right' = 'left';
 </script>
 

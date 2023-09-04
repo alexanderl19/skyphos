@@ -57,8 +57,7 @@
 
 <div class="header">
 	<h1>{event.title}</h1>
-	<span>{event.description}</span>
-	<span>{event.timeZone}</span>
+	<p class="description">{event.description}</p>
 </div>
 <div class="schedule-parent">
 	<Times {numberOfSegments} />
@@ -72,7 +71,10 @@
 </div>
 
 <style lang="scss">
-	$max-width: 1056px;
+	$padding: 24px;
+	$times-width: 50px + $padding + 24px;
+	$max-width-breakpoint: 1312px;
+	$max-width: $max-width-breakpoint - $times-width * 2;
 
 	:global(body) {
 		margin: 0;
@@ -84,22 +86,36 @@
 	}
 
 	.header {
-		margin: 0 auto;
-		padding: 24px;
 		max-width: $max-width;
+		margin: 24px;
+
+		@media (min-width: 672px) {
+			margin-left: $times-width;
+		}
+
+		@media (min-width: $max-width-breakpoint) {
+			max-width: $max-width;
+			margin: 24px auto;
+		}
 
 		h1 {
 			font-family: 'Archivo';
 			font-weight: 400;
-			font-size: 28px;
-			line-height: 36px;
+			font-size: 20px;
+			line-height: 28px;
+		}
+
+		.description {
+			margin: 0;
+			font-weight: 400;
+			font-size: 16px;
+			line-height: 24px;
+			max-width: 60ch;
 		}
 	}
 
 	.schedule-parent {
-		$padding: 24px;
-
-		padding-left: calc((100vw - $max-width) / 2 - 50px - $padding);
+		padding-left: calc((100vw - $max-width) / 2 - 50px - $padding - 24px);
 		display: flex;
 		align-items: stretch;
 		justify-content: stretch;

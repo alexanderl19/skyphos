@@ -8,7 +8,7 @@
 
 	const startDate = dayjs.tz(event.pollDates[0] + 'T' + event.pollStartTime, event.timeZone);
 
-	const times = Array(numberOfSegments)
+	const times = Array(numberOfSegments + 1)
 		.fill(undefined)
 		.map((_undefined, i) => startDate.add(i / 2, 'hour').format('h A'));
 </script>
@@ -16,7 +16,9 @@
 <div class="times">
 	<span>{startDate.format('z')}</span>
 	{#each times as time, i}
-		<div class="label" class:half-hour={i % 2}>{time}</div>
+		<div class="label" class:half-hour={i % 2}>
+			<span>{time}</span>
+		</div>
 	{/each}
 </div>
 
@@ -29,18 +31,24 @@
 		align-items: end;
 		position: sticky;
 		background-color: #fff;
+		padding: 0 12px;
 	}
 
 	.label {
-		font-size: 14px;
-		letter-spacing: -0.006em;
-		line-height: 20px;
 		width: max-content;
-		font-variant-numeric: lining-nums tabular-nums;
 		height: 24px;
 
 		&.half-hour {
 			opacity: 0;
+		}
+
+		span {
+			display: block;
+			font-variant-numeric: lining-nums tabular-nums;
+			font-size: 14px;
+			letter-spacing: -0.006em;
+			line-height: 100%;
+			transform: translateY(-50%);
 		}
 	}
 </style>
