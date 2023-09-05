@@ -48,6 +48,9 @@
 		.flatMap((day) => day.map((ids) => ids.length))
 		.reduce((a, b) => Math.max(a, b), -Infinity);
 
+	setContext('max', max);
+	setContext('peopleCount', event.pollResponses.length);
+
 	const colors = new Poline({
 		positionFunctionX: positionFunctions.linearPosition,
 		positionFunctionY: positionFunctions.exponentialPosition,
