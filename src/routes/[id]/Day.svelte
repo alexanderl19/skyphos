@@ -6,9 +6,17 @@
 	export let segments: string[][];
 </script>
 
-<div class="day">
-	<span>{dayjs(date).format('ddd D')}</span>
+<div>
+	<span class="day">{dayjs(date).format('ddd D')}</span>
 	{#each segments as ids, i}
 		<HalfHour {ids} {i} />
 	{/each}
 </div>
+
+<style lang="scss">
+	.day {
+		display: block;
+		height: 40px;
+		text-align: center;
+	}
+</style>

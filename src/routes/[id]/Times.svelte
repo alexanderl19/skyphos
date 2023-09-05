@@ -14,7 +14,7 @@
 </script>
 
 <div class="times">
-	<span>{startDate.format('z')}</span>
+	<span class="timezone">{startDate.format('z')}</span>
 	{#each times as time, i}
 		<div class="label" class:half-hour={i % 2}>
 			<span>{time}</span>
@@ -32,6 +32,10 @@
 		position: sticky;
 		background-color: #fff;
 		padding: 0 12px;
+	}
+
+	.timezone {
+		height: 40px;
 	}
 
 	.label {
