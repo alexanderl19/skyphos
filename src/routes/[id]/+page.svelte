@@ -2,7 +2,7 @@
 	import type { PageData } from './$types';
 	import { setContext } from 'svelte';
 	import Day from './Day.svelte';
-	import { Poline } from 'poline';
+	import { Poline, positionFunctions } from 'poline';
 	import { dragscroll } from '@svelte-put/dragscroll';
 	import Times from './Times.svelte';
 	import Fade from './Fade.svelte';
@@ -10,14 +10,6 @@
 	export let data: PageData;
 	const event = data.event;
 	setContext('event', event);
-
-	const colors = new Poline({
-		numPoints: 6,
-		anchorColors: [
-			[309, 0.72, 0.8],
-			[67, 0.32, 0.08]
-		]
-	});
 
 	const pollDates = event.pollDates;
 	const pollStartTime = event.pollStartTime.split(':');
@@ -52,6 +44,21 @@
 		});
 	});
 
+	const max = Array.from(dates.values())
+		.flatMap((day) => day.map((ids) => ids.length))
+		.reduce((a, b) => Math.max(a, b), -Infinity);
+
+	const colors = new Poline({
+		positionFunctionX: positionFunctions.linearPosition,
+		positionFunctionY: positionFunctions.exponentialPosition,
+		positionFunctionZ: positionFunctions.linearPosition,
+		numPoints: max,
+		anchorColors: [
+			[7, 0.25, 1],
+			[125, 0.8, 0.5]
+		]
+	});
+
 	const colorStyle = colors.colorsCSS.map((colorCss, i) => `--color-${i}: ${colorCss};`).join('');
 </script>
 
@@ -59,10 +66,10 @@
 	<h1>{event.title}</h1>
 	<p class="description">{event.description}</p>
 </div>
-<div class="schedule-parent">
+<div class="schedule-parent" style={colorStyle}>
 	<Times {numberOfSegments} />
 	<Fade />
-	<div use:dragscroll class="schedule" style={colorStyle}>
+	<div use:dragscroll class="schedule">
 		{#each Array.from(dates.entries()) as [date, segments]}
 			<Day {date} {segments} />
 		{/each}
@@ -124,7 +131,7 @@
 			display: flex;
 			overflow-x: auto;
 			box-sizing: border-box;
-			padding: 0 calc((100vw - $max-width) / 2) 0 $padding;
+			padding: 0 max(calc((100vw - $max-width) / 2), $padding) 0 $padding;
 		}
 	}
 </style>
