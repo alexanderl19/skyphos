@@ -4,7 +4,7 @@
 
 <div class="scale">
 	<span class="label min">Min (0)</span>
-	{#each new Array(max) as _undefined, i}
+	{#each new Array(max + 1) as _undefined, i}
 		<div class="color" style:background-color="var(--color-{i})" />
 	{/each}
 	<span class="label max">Max ({max})</span>
