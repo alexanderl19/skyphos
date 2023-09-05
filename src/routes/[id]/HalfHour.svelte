@@ -1,5 +1,4 @@
 <script lang="ts">
-	import type { PageData } from './$types';
 	import { getContext } from 'svelte';
 
 	export let ids: string[];

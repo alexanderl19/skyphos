@@ -6,6 +6,7 @@
 	import { dragscroll } from '@svelte-put/dragscroll';
 	import Times from './Times.svelte';
 	import Fade from './Fade.svelte';
+	import Scale from './Scale.svelte';
 
 	export let data: PageData;
 	const event = data.event;
@@ -65,20 +66,23 @@
 	const colorStyle = colors.colorsCSS.map((colorCss, i) => `--color-${i}: ${colorCss};`).join('');
 </script>
 
-<div class="header">
-	<h1>{event.title}</h1>
-	<p class="description">{event.description}</p>
-</div>
-<div class="schedule-parent" style={colorStyle}>
-	<Times {numberOfSegments} />
-	<Fade />
-	<div use:dragscroll class="schedule">
-		{#each Array.from(dates.entries()) as [date, segments]}
-			<Day {date} {segments} />
-		{/each}
+<main style={colorStyle}>
+	<div class="header">
+		<h1>{event.title}</h1>
+		<p class="description">{event.description}</p>
+		<Scale {max} />
 	</div>
-	<Fade direction="right" />
-</div>
+	<div class="schedule-parent">
+		<Times {numberOfSegments} />
+		<Fade />
+		<div use:dragscroll class="schedule">
+			{#each Array.from(dates.entries()) as [date, segments]}
+				<Day {date} {segments} />
+			{/each}
+		</div>
+		<Fade direction="right" />
+	</div>
+</main>
 
 <style lang="scss">
 	$padding: 24px;
@@ -116,7 +120,7 @@
 		}
 
 		.description {
-			margin: 0;
+			margin: 12px 0;
 			font-weight: 400;
 			font-size: 16px;
 			line-height: 24px;
