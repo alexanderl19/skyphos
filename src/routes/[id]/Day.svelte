@@ -9,7 +9,7 @@
 <div>
 	<span class="day">{dayjs(date).format('ddd D')}</span>
 	{#each segments as ids, i}
-		<HalfHour {ids} {i} />
+		<HalfHour {ids} />
 	{/each}
 </div>
 
