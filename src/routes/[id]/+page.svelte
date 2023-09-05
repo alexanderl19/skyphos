@@ -66,6 +66,16 @@
 	const colorStyle = colors.colorsCSS.map((colorCss, i) => `--color-${i}: ${colorCss};`).join('');
 </script>
 
+<svelte:head>
+	<title>{event.title}</title>
+	<meta property="og:title" content={event.title} />
+
+	{#if event.description}
+		<meta property="description" content={event.description} />
+		<meta property="og:description" content={event.description} />
+	{/if}
+</svelte:head>
+
 <main style={colorStyle}>
 	<div class="header">
 		<h1>{event.title}</h1>
